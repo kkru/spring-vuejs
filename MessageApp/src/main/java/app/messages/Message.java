@@ -1,5 +1,4 @@
 package app.messages;
-
 public class Message {
     private String text;
 
