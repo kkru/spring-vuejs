@@ -1,30 +1,43 @@
 package app.messages;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+// import java.sql.Connection;
+// import java.sql.PreparedStatement;
+// import java.sql.ResultSet;
+// import java.sql.SQLException;
+// import java.sql.Statement;
+// import java.sql.Timestamp;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 @Component
 public class MessageRepository {
     
     private final static Log log = LogFactory.getLog(MessageRepository.class);
-    private DataSource dataSource;
 
-    public MessageRepository(DataSource dataSource){
-        this.dataSource = dataSource;
+    private SessionFactory sessionFactory;
+
+    public MessageRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public Message saveMessage(Message message){
+        Session session = sessionFactory.getCurrentSession();
+        session.save(message);
+        return message;
     }
 
     //JDBC API
+    /*
     public Message saveMessage(Message message) {
         Connection c = DataSourceUtils.getConnection(dataSource);
         try {
@@ -59,5 +72,6 @@ public class MessageRepository {
         }
         return null;
     }
+    */
 
 }

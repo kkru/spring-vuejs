@@ -3,10 +3,24 @@ package app.messages;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.*;
+@Entity
+@Table(name = "messages")
 public class Message {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id", nullable = false)
     private Integer id;
+
+    @Column(name = "text", nullable = false, length = 120)
     private String text;
+
+    @Column(name = "created_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+
+    public Message() {}
 
     public Message(String text) {
         this.text = text;
